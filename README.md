@@ -1,4 +1,6 @@
+Projeto acadêmico desenvolvido para a disciplina de Front-End Design Engineering — FIAP Sprint 03.
 
+Sistema web da ONG *Turma do Bem* que conecta pacientes a dentistas voluntários através de um cartão físico com QR Code único. O cartão dá acesso rápido à ficha digital do paciente, facilitando a organização dos atendimentos odontológicos gratuitos.
 - **React 18** — interface e componentização
 - **Vite** — build e servidor de desenvolvimento
 - **TypeScript** — tipagem do código
