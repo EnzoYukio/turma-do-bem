@@ -1,9 +1,6 @@
-type Status = 'ativo' | 'inativo' 
-
-
-type Id = number | string 
-
-
+type Status = 'ativo' | 'inativo'
+type Id = number | string
+ 
 export interface Paciente {
   id: Id
   nome: string
@@ -15,17 +12,16 @@ export interface Paciente {
   endereco: string
   dentista: string
 }
-
+ 
 export interface Dentista {
-  Iddentista: Id
+  id: Id
   nome: string
-  cpf: string
-  especialidade: string
   cro: string
+  especialidade: string
+  status: Status
 }
-
+ 
 export type PacienteComStatus = Paciente & { status: Status }
-
-export type FormPaciente = Omit<Paciente, 'id' | 'CodigoQR'>
-
-export type FormDentista = Omit<Dentista, 'Iddentista'>
+export type FormPaciente = Omit<Paciente, 'id'>
+export type FormDentista = Omit<Dentista, 'id'>
+ 
