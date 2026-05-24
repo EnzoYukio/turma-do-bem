@@ -1,16 +1,23 @@
-// página de gerenciamento de pacientes
-// conectada à API Java via Quarkus
-
 import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Menu from '../components/Menu'
 import MenuInferior from '../components/MenuInferior'
 import Footer from '../components/Footer'
-import type { Paciente, FormPaciente } from '../types'
+import type { Paciente } from '../types'
 
-// TROQUE pela URL da API Java publicada na nuvem
-// o endpoint é /paciente (singular) — assim está no código Java
+// TROQUE pela URL real da API no Railway
 const API_URL = 'https://turma-do-bem-api-v2-production.up.railway.app/paciente'
+
+// tipo do formulário sem id e sem idendereco
+type FormPaciente = {
+  nome: string
+  cpf: string
+  email: string
+  telefone: string
+  codigoQR: string
+  endereco: string
+  dentista: string
+}
 
 function Pacientes() {
   const [pacientes, setPacientes] = useState<Paciente[]>([])
@@ -24,7 +31,7 @@ function Pacientes() {
     cpf: '',
     email: '',
     telefone: '',
-    idendereco: 0,
+    codigoQR: '',
     endereco: '',
     dentista: '',
   })
@@ -42,7 +49,7 @@ function Pacientes() {
       const dados: Paciente[] = await resposta.json()
       setPacientes(dados)
     } catch {
-      setMensagem('❌ Não foi possível carregar os pacientes. Verifique se a API está no ar.')
+      setMensagem('❌ Não foi possível carregar os pacientes. Verifique a API.')
     } finally {
       setCarregando(false)
     }
@@ -54,7 +61,7 @@ function Pacientes() {
       const resposta = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, idendereco: 1 }),
       })
       if (!resposta.ok) throw new Error('Erro ao adicionar')
       setMensagem('✅ Paciente adicionado!')
@@ -65,14 +72,14 @@ function Pacientes() {
     }
   }
 
-  // PUT — atualiza paciente (a API Java recebe o objeto inteiro, sem /{id} na URL)
+  // PUT — atualiza paciente
   async function atualizarPaciente() {
     if (!editando) return
     try {
       const resposta = await fetch(API_URL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, id: editando.id, CodigoQR: editando.CodigoQR }),
+        body: JSON.stringify({ ...form, id: editando.id, idendereco: 1 }),
       })
       if (!resposta.ok) throw new Error('Erro ao atualizar')
       setMensagem('✅ Paciente atualizado!')
@@ -83,13 +90,11 @@ function Pacientes() {
     }
   }
 
-  // DELETE — remove paciente pelo id
+  // DELETE — remove paciente
   async function removerPaciente(id: Paciente['id']) {
     if (!confirm('Tem certeza que quer remover este paciente?')) return
     try {
-      const resposta = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE',
-      })
+      const resposta = await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
       if (!resposta.ok) throw new Error('Erro ao remover')
       setMensagem('✅ Paciente removido!')
       buscarPacientes()
@@ -98,29 +103,36 @@ function Pacientes() {
     }
   }
 
-  function prepararEdicao(p: Paciente) {
-    setEditando(p)
+  function prepararEdicao(paciente: Paciente) {
+    setEditando(paciente)
     setForm({
-      nome: p.nome,
-      cpf: p.cpf,
-      email: p.email,
-      telefone: p.telefone,
-      idendereco: p.idendereco,
-      endereco: p.endereco,
-      dentista: p.dentista,
+      nome: paciente.nome,
+      cpf: paciente.cpf,
+      email: paciente.email,
+      telefone: paciente.telefone,
+      codigoQR: paciente.codigoQR,
+      endereco: paciente.endereco,
+      dentista: paciente.dentista,
     })
     setMostrarForm(true)
   }
 
   function resetarForm() {
-    setForm({ nome: '', cpf: '', email: '', telefone: '', idendereco: 0, endereco: '', dentista: '' })
+    setForm({ nome: '', cpf: '', email: '', telefone: '', codigoQR: '', endereco: '', dentista: '' })
     setEditando(null)
     setMostrarForm(false)
   }
 
   function enviarForm() {
+    // valida campos obrigatórios
     if (!form.nome || !form.cpf || !form.email || !form.telefone) {
       setMensagem('❌ Preencha todos os campos obrigatórios.')
+      return
+    }
+    // valida CPF — precisa ter exatamente 11 dígitos
+    const cpfSoNumeros = form.cpf.replace(/\D/g, '')
+    if (cpfSoNumeros.length !== 11) {
+      setMensagem('❌ CPF precisa ter exatamente 11 dígitos.')
       return
     }
     if (editando) {
@@ -161,26 +173,56 @@ function Pacientes() {
               {editando ? 'Editar Paciente' : 'Novo Paciente'}
             </h2>
 
-            {[
-              { label: 'Nome', field: 'nome' as const },
-              { label: 'CPF', field: 'cpf' as const },
-              { label: 'Email', field: 'email' as const },
-              { label: 'Telefone', field: 'telefone' as const },
-              { label: 'Endereço', field: 'endereco' as const },
-              { label: 'Dentista responsável', field: 'dentista' as const },
-            ].map(({ label, field }) => (
-              <div key={field}>
-                <label className="block text-sm text-gray-500 mb-1">{label}</label>
-                <input
-                  type="text"
-                  value={form[field] as string}
-                  onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                />
-              </div>
-            ))}
+            <label className="block text-sm text-gray-500 mb-1">Nome *</label>
+            <input
+              type="text"
+              value={form.nome}
+              onChange={(e) => setForm({ ...form, nome: e.target.value })}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
 
-            <div className="flex gap-3 mt-1">
+            <label className="block text-sm text-gray-500 mb-1">CPF * (só números, 11 dígitos)</label>
+            <input
+              type="text"
+              value={form.cpf}
+              maxLength={11}
+              onChange={(e) => setForm({ ...form, cpf: e.target.value.replace(/\D/g, '') })}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+
+            <label className="block text-sm text-gray-500 mb-1">Email *</label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+
+            <label className="block text-sm text-gray-500 mb-1">Telefone *</label>
+            <input
+              type="text"
+              value={form.telefone}
+              onChange={(e) => setForm({ ...form, telefone: e.target.value })}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+
+            <label className="block text-sm text-gray-500 mb-1">Dentista responsável</label>
+            <input
+              type="text"
+              value={form.dentista}
+              onChange={(e) => setForm({ ...form, dentista: e.target.value })}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+
+            <label className="block text-sm text-gray-500 mb-1">Endereço</label>
+            <input
+              type="text"
+              value={form.endereco}
+              onChange={(e) => setForm({ ...form, endereco: e.target.value })}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+
+            <div className="flex gap-3">
               <button
                 onClick={enviarForm}
                 className="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-5 py-2 rounded-xl"
@@ -213,10 +255,8 @@ function Pacientes() {
               <p className="text-gray-500 text-sm">Email: {p.email}</p>
               <p className="text-gray-500 text-sm">Telefone: {p.telefone}</p>
               <p className="text-gray-500 text-sm">Dentista: {p.dentista}</p>
-              {p.CodigoQR && (
-                <p className="text-gray-500 text-sm mb-3">Código QR: {p.CodigoQR}</p>
-              )}
-              <div className="flex gap-2 mt-2">
+              <p className="text-gray-500 text-sm mb-3">Endereço: {p.endereco}</p>
+              <div className="flex gap-2">
                 <button
                   onClick={() => prepararEdicao(p)}
                   className="bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-semibold px-4 py-2 rounded-lg"
