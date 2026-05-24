@@ -79,7 +79,7 @@ npm run dev
 
 -  **GitHub:** [https://github.com/enzoyukio2005-netizen/turma-do-bem.git](https://github.com/enzoyukio2005-netizen/turma-do-bem.git)
 - **YouTube:** [https://youtube.com/SEU_VIDEO](https://youtube.com/SEU_VIDEO)
-- **Vercel:** [https://SEU_PROJETO.vercel.app](https://SEU_PROJETO.vercel.app)
+- **Vercel:** [turma-do-bem.vercel.app](turma-do-bem.vercel.app)
 
 
 | Enzo Yukio Oyadomari | 561032 | 1TDSPR | [LinkedIn](https://www.linkedin.com/in/enzooyadomari/) | [GitHub](https://github.com/enzoyukio2005-netizen) |
