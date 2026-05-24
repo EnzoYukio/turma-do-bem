@@ -8,21 +8,18 @@ function MenuInferior() {
       <NavLink to="/" end className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
         Início
       </NavLink>
+      <NavLink to="/pacientes" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
+        Pacientes
+      </NavLink>
+      <NavLink to="/dentistas" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
+        Dentistas
+      </NavLink>
       <NavLink to="/sobre" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
         Sobre
       </NavLink>
-      <NavLink to="/faq" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
-        FAQ
-      </NavLink>
-      <NavLink to="/contato" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
-        Contato
-      </NavLink>
       <NavLink to="/integrantes" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
-        Integrantes
+        Equipe
       </NavLink>
-      <NavLink to="/solucao" className={({ isActive }) => isActive ? 'text-blue-800 text-xs font-bold' : 'text-blue-500 text-xs font-semibold'}>
-  Solução
-</NavLink>
     </nav>
   )
 }
