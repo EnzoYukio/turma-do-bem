@@ -19,6 +19,28 @@ function Menu() {
       </NavLink>
 
       <NavLink
+        to="/pacientes"
+        className={({ isActive }) =>
+          isActive
+            ? 'text-white font-bold px-3 py-2 rounded-lg bg-blue-800 text-sm'
+            : 'text-white font-semibold px-3 py-2 rounded-lg hover:bg-blue-800 text-sm'
+        }
+      >
+        Pacientes
+      </NavLink>
+
+      <NavLink
+        to="/dentistas"
+        className={({ isActive }) =>
+          isActive
+            ? 'text-white font-bold px-3 py-2 rounded-lg bg-blue-800 text-sm'
+            : 'text-white font-semibold px-3 py-2 rounded-lg hover:bg-blue-800 text-sm'
+        }
+      >
+        Dentistas
+      </NavLink>
+
+      <NavLink
         to="/sobre"
         className={({ isActive }) =>
           isActive
@@ -61,16 +83,6 @@ function Menu() {
       >
         Integrantes
       </NavLink>
-      <NavLink
-  to="/solucao"
-  className={({ isActive }) =>
-    isActive
-      ? 'text-white font-bold px-3 py-2 rounded-lg bg-blue-800 text-sm'
-      : 'text-white font-semibold px-3 py-2 rounded-lg hover:bg-blue-800 text-sm'
-  }
->
-  Solução
-</NavLink>
     </nav>
   )
 }
