@@ -2,7 +2,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
-import Solucao from './pages/Solucao'
 import Sobre from './pages/Sobre'
 import FAQ from './pages/FAQ'
 import Contato from './pages/Contato'
@@ -10,6 +9,8 @@ import Integrantes from './pages/Integrantes'
 import IntegranteDetalhe from './pages/IntegranteDetalhe'
 import Login from './pages/Login'
 import NaoEncontrado from './pages/NaoEncontrado'
+import Pacientes from './pages/Pacientes'
+import Dentistas from './pages/Dentistas'
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
         <Route path="/contato" element={<Contato />} />
         <Route path="/integrantes" element={<Integrantes />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/solucao" element={<Solucao />} />
+        <Route path="/pacientes" element={<Pacientes />} />
+        <Route path="/dentistas" element={<Dentistas />} />
 
         {/* rota dinâmica — o :id muda dependendo de qual integrante foi clicado */}
         <Route path="/integrantes/:id" element={<IntegranteDetalhe />} />
