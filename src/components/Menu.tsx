@@ -1,6 +1,3 @@
-// menu de navegação que fica no topo da página
-// usei NavLink pra destacar a página atual automaticamente
-
 import { NavLink } from 'react-router-dom'
 
 function Menu() {

@@ -88,10 +88,3 @@ npm run dev
 - Email: enzoyukio2005@gmail.com
 
 
----
-
-## Imagens do projeto
-
-> Adicione aqui prints das telas do sistema.
-
-
