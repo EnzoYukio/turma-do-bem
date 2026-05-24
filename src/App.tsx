@@ -1,3 +1,5 @@
+// arquivo principal que define todas as rotas do site
+// usei o BrowserRouter do react-router-dom pra fazer o SPA funcionar
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
