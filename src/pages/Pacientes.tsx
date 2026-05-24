@@ -10,7 +10,7 @@ import type { Paciente, FormPaciente } from '../types'
 
 // TROQUE pela URL da API Java publicada na nuvem
 // o endpoint é /paciente (singular) — assim está no código Java
-const API_URL = 'https://SUA_API_AQUI/paciente'
+const API_URL = 'turma-do-bem-api-v2-production.up.railway.app'
 
 function Pacientes() {
   const [pacientes, setPacientes] = useState<Paciente[]>([])
