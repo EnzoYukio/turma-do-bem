@@ -1,4 +1,3 @@
-
 Sistema web da ONG *Turma do Bem* que conecta pacientes a dentistas voluntários através de um cartão físico com QR Code único. O cartão dá acesso rápido à ficha digital do paciente, facilitando a organização dos atendimentos odontológicos gratuitos.
 - **React 18** — interface e componentização
 - **Vite** — build e servidor de desenvolvimento
@@ -61,5 +60,7 @@ Vercel:https://turma-do-bem.vercel.app/
 
 | Enzo Yukio Oyadomari | 561032 | 1TDSPR | [LinkedIn](https://www.linkedin.com/in/enzooyadomari/) | [GitHub](https://github.com/enzoyukio2005-netizen) |
 | João Victor de Souza Braz | 566862 | 1TDSPR | [LinkedIn](https://www.linkedin.com/in/souzabrazj/) | [GitHub](https://github.com/souzabrazj) |
+
+- Email: souzabrazj@gmail.com
 
 - Email: enzoyukio2005@gmail.com
