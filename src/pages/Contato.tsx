@@ -1,5 +1,3 @@
-// página de contato com formulário
-// usei React Hook Form pra validar os campos
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,7 +6,6 @@ import Menu from '../components/Menu'
 import MenuInferior from '../components/MenuInferior'
 import Footer from '../components/Footer'
 
-// tipo dos dados do formulário
 type DadosContato = {
   nome: string
   email: string
@@ -16,10 +13,9 @@ type DadosContato = {
 }
 
 function Contato() {
-  // estado pra mostrar mensagem de sucesso depois de enviar
+  
   const [enviado, setEnviado] = useState(false)
 
-  // configuração do React Hook Form
   const {
     register,
     handleSubmit,
@@ -27,13 +23,11 @@ function Contato() {
     formState: { errors },
   } = useForm<DadosContato>()
 
-  // função que roda quando o formulário é enviado
   function enviarFormulario(dados: DadosContato) {
     console.log('dados do formulário:', dados)
     setEnviado(true)
     reset()
 
-    // some a mensagem de sucesso depois de 3 segundos
     setTimeout(() => {
       setEnviado(false)
     }, 3000)
