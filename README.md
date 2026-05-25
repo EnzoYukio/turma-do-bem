@@ -54,6 +54,7 @@ npm run dev
 # 5. Acesse no navegador
 # http://localhost:5173
 ```
+Vercel:https://turma-do-bem.vercel.app/
 
 -  **GitHub:** [https://github.com/enzoyukio2005-netizen/turma-do-bem.git](https://github.com/enzoyukio2005-netizen/turma-do-bem.git)
 -  **YouTube:** [https://youtu.be/VG5kgxSmHm0](https://youtu.be/VG5kgxSmHm0)
